@@ -1,41 +1,63 @@
+add v0 front / back ✅
+add link to docs ✅
+add files from v0 to src ✅
+insure we are not missing endpoints from the docs
+
+go back to v0, reprompt the llm.txt but link to this sdk instead. 
+"create a boilerplate for a create-metal-app"
+
 # Metal SDK
 
-A modern Node.js SDK for Metal.
+A flexible SDK for interacting with the Metal API. This SDK provides a clean interface for all Metal API endpoints with separate configurations for client-side and server-side usage.
 
-## Installation
+For more information on the Metal API, please refer to the [Metal API Docs](https://docs.metal.build).
 
-```bash
-npm install metal-sdk
-```
+## Frontend Setup (Client-side)
 
-## Usage
+For public endpoints that don't require secret keys, use the public client:
 
 ```typescript
-import { MetalSDK } from 'metal-sdk';
+import { Metal } from "@0xmetropolis/metal-sdk";
 
-const client = new MetalSDK({
-  apiKey: 'your-api-key'
-});
+// Initialize with public key
+const metalClient = Metal.createPublicClient("your_public_key");
 
-// Use the SDK
+// Examples of client-safe operations:
+// Get holder details
+const holder = await metalClient.holder.getHolder("user123");
+
+// Get token balance
+const balance = await metalClient.holder.getTokenBalance(
+    "user123",
+    "tokenAddress"
+);
 ```
 
-## Development
+## Backend Setup (Server-side)
 
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Build the project:
-   ```bash
-   npm run build
-   ```
-4. Run tests:
-   ```bash
-   npm test
-   ```
+For protected endpoints that require authentication, use the secret client:
 
-## License
+```typescript
+import { Metal } from "@0xmetropolis/metal-sdk";
 
-MIT 
+// Initialize with secret key
+const metalServer = Metal.createSecretClient("your_secret_key");
+
+// Examples of server-side operations:
+// Create a new token
+const tokenJob = await metalServer.merchant.createToken({
+    name: "My Token",
+    symbol: "MTK",
+});
+
+// Distribute tokens
+const distribution = await metalServer.token.distribute("tokenAddress", {
+    sendToAddress: "holderAddress",
+    amount: "100",
+});
+
+// Create or get a holder
+const holder = await metalServer.holder.createHolder("user123");
+```
+
+🚨 Note: Never expose your secret key in client-side code. The secret client should only be used in secure server environments.
