@@ -1,9 +1,3 @@
-add files from v0 to src ✅
-insure we are not missing endpoints from the docs
-
-go back to v0, reprompt the llm.txt but link to this sdk instead.
-"create a boilerplate for a create-metal-app"
-
 # Metal SDK
 
 A flexible Node SDK for interacting with the Metal API. This SDK provides a clean interface for all Metal API endpoints with separate configurations for client-side and server-side usage.
@@ -54,8 +48,8 @@ const distribution = await metal.token.distribute("tokenAddress", {
     amount: "100",
 });
 
-// Create or get a holder
-const holder = await metal.holder.createHolder("user123");
+// Get or create holder
+const holder = await metal.holder.getOrCreateHolder("user123");
 ```
 
 🚨 Note: Never expose your secret key in client-side code. The secret client should only be used in secure server environments.

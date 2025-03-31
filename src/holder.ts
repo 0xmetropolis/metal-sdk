@@ -20,7 +20,7 @@ export class HolderAPI {
      * @param holderId Unique identifier for the holder
      * @returns Holder data including address
      */
-    async createHolder(holderId: string): Promise<HolderData> {
+    async getOrCreateHolder(holderId: string): Promise<HolderData> {
         return this.client.fetchSecret(`/holder/${holderId}`, {
             method: "PUT",
         });
