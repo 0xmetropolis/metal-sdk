@@ -37,19 +37,19 @@ const metal = Metal.createSecretClient("your_secret_key");
 
 // Examples of server-side operations:
 // Create a new token
-const tokenJob = await metal.merchant.createToken({
+const tokenJob = await metal.createToken({
     name: "My Token",
     symbol: "MTK",
 });
 
 // Distribute tokens
-const distribution = await metal.token.distribute("tokenAddress", {
+const distribution = await metal.distribute("tokenAddress", {
     sendToAddress: "holderAddress",
     amount: "100",
 });
 
 // Get or create holder
-const holder = await metal.holder.getOrCreateHolder("user123");
+const holder = await metal.getOrCreateHolder("user123");
 ```
 
 🚨 Note: Never expose your secret key in client-side code. The secret client should only be used in secure server environments.
@@ -58,6 +58,10 @@ const holder = await metal.holder.getOrCreateHolder("user123");
 
 1. Implement changes, add features, etc.
 
-2. `npm install && npm run build`. Ensure the build passes.
+2. Bump the version in `package.json`
 
-3. `npm publish`.
+3. `npm install && npm run build`. Ensure the build passes.
+
+4. `npm login` (if not already logged in)
+
+5. `npm publish`.

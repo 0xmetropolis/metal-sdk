@@ -11,6 +11,10 @@ import type {
     TokenJobResponse,
     DistributeRequest,
     CreateLPRequest,
+    HolderData,
+    SpendRequest,
+    SpendResponse,
+    TokenBalanceResponse,
 } from "./types";
 
 export * from "./types";
@@ -18,14 +22,14 @@ export * from "./types";
 export class Metal {
     private merchantAPI: MerchantAPI;
     private tokenAPI: TokenAPI;
-    public holder: HolderAPI;
+    private holderAPI: HolderAPI;
     public client: MetalClient;
 
     constructor(config: MetalConfig) {
         this.client = new MetalClient(config);
         this.merchantAPI = new MerchantAPI(this.client);
         this.tokenAPI = new TokenAPI(this.client);
-        this.holder = new HolderAPI(this.client);
+        this.holderAPI = new HolderAPI(this.client);
     }
 
     // Static method to create a client-side Metal instance
@@ -68,6 +72,36 @@ export class Metal {
         params: CreateLPRequest
     ): Promise<TokenJobResponse> {
         return this.tokenAPI.createLP(tokenAddress, params);
+    }
+
+    // Holder API methods
+    async getOrCreateHolder(holderId: string): Promise<HolderData> {
+        return this.holderAPI.getOrCreateHolder(holderId);
+    }
+
+    async getHolder(holderId: string): Promise<HolderData> {
+        return this.holderAPI.getHolder(holderId);
+    }
+
+    async getTokenBalance(
+        holderId: string,
+        tokenAddress: string
+    ): Promise<TokenBalanceResponse> {
+        return this.holderAPI.getTokenBalance(holderId, tokenAddress);
+    }
+
+    async spend(
+        holderId: string,
+        params: SpendRequest
+    ): Promise<SpendResponse> {
+        return this.holderAPI.spend(holderId, params);
+    }
+
+    async withdraw(
+        holderId: string,
+        params: SpendRequest
+    ): Promise<SpendResponse> {
+        return this.holderAPI.withdraw(holderId, params);
     }
 }
 
