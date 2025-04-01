@@ -16,10 +16,10 @@ const metal = Metal.createPublicClient("your_public_key");
 
 // Examples of client-safe operations:
 // Get holder details
-const holder = await metal.holder.getHolder("user123");
+const holder = await metal.getHolder("user123");
 
 // Get token balance
-const balance = await metal.holder.getTokenBalance(
+const balance = await metal.getTokenBalance(
     "user123",
     "tokenAddress"
 );
