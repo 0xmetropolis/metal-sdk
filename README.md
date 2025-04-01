@@ -53,3 +53,11 @@ const holder = await metal.holder.getOrCreateHolder("user123");
 ```
 
 🚨 Note: Never expose your secret key in client-side code. The secret client should only be used in secure server environments.
+
+## Publishing
+
+1. Implement changes, add features, etc.
+
+2. `npm install && npm run build`. Ensure the build passes.
+
+3. `npm publish`.
